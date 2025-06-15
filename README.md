@@ -75,7 +75,7 @@ Pastikan Anda telah menginstal perangkat lunak berikut di komputer Anda:
     Salin file `.env.local.example` (jika ada) menjadi `.env.local` dan isi semua variabel yang dibutuhkan. Lihat detailnya di bawah ini.
 
     ```bash
-    cp .env.local.example .env.local
+    cp .env.example .env
     ```
 
 4.  **Jalankan server development**
