@@ -6,14 +6,14 @@ Sistem Manajemen Absensi Siswa berbasis web yang modern, cepat, dan andal. Diban
 
 ### Daftar Isi
 
-1.  [Tentang Proyek](https://www.google.com/search?q=%23tentang-proyek)
-2.  [Fitur Utama](https://www.google.com/search?q=%23fitur-utama)
-3.  [Teknologi yang Digunakan](https://www.google.com/search?q=%23teknologi-yang-digunakan)
-4.  [Panduan Setup](https://www.google.com/search?q=%23panduan-setup)
-    - [Prasyarat](https://www.google.com/search?q=%23prasyarat)
-    - [Instalasi](https://www.google.com/search?q=%23instalasi)
-5.  [Konfigurasi Environment](https://www.google.com/search?q=%23konfigurasi-environment)
-6.  [Skrip yang Tersedia](https://www.google.com/search?q=%23skrip-yang-tersedia)
+1.  [Tentang Proyek](#tentang-proyek)
+2.  [Fitur Utama](#fitur-utama)
+3.  [Teknologi yang Digunakan](#teknologi-yang-digunakan)
+4.  [Panduan Setup](#panduan-setup)
+    - [Prasyarat](#prasyarat)
+    - [Instalasi](#instalasi)
+5.  [Konfigurasi Environment](#konfigurasi-environment)
+6.  [Skrip yang Tersedia](#skrip-yang-tersedia)
 
 ---
 
