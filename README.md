@@ -60,7 +60,7 @@ Pastikan Anda telah menginstal perangkat lunak berikut di komputer Anda:
 1.  **Clone repositori ini**
 
     ```bash
-    git clone https://github.com/username/absensi-sekolahku.git
+    git clone https://github.com/piahn/absensi-sekolahku.git
     cd absensi-sekolahku
     ```
 
