@@ -42,6 +42,10 @@ Proyek ini juga mengintegrasikan layanan notifikasi (melalui Twilio) untuk mengi
 - **Layanan Notifikasi**: [Twilio](https://www.twilio.com/)
 - **Manajemen Cookies**: [cookies-next](https://www.npmjs.com/package/cookies-next)
 
+## Example Websitenya 
+
+![Demo Aplikasi SekolahKu](https://github.com/Piahn/Piahn/blob/main/sekolah.ku-GoogleChrome2025-06-1610-48-24-ezgif.com-optimize.gif?raw=true)
+
 ---
 
 ## Panduan Setup
