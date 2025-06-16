@@ -44,7 +44,7 @@ Proyek ini juga mengintegrasikan layanan notifikasi (melalui Twilio) untuk mengi
 
 ## Example Websitenya 
 
-![Demo Aplikasi SekolahKu](https://github.com/Piahn/Piahn/blob/main/sekolah.ku-GoogleChrome2025-06-1610-48-24-ezgif.com-optimize.gif?raw=true)
+![Demo Aplikasi SekolahKu](https://github.com/Piahn/Piahn/blob/main/images/sekolah.ku-GoogleChrome2025-06-1610-48-24-ezgif.com-video-to-gif-converter.gif?raw=true)
 
 ---
 
