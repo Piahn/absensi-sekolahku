@@ -1,15 +1,9 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { db } from "@/lib/firebaseClient";
-import {
-  collection,
-  getDocs,
-  doc,
-  setDoc,
-  Timestamp,
-} from "firebase/firestore";
-import Modal from "../_components/molecule/modal/modal";
+import { useEffect, useState } from 'react';
+import { db } from '@/lib/firebaseClient';
+import { collection, getDocs, doc, setDoc, Timestamp } from 'firebase/firestore';
+import Modal from '../_components/molecule/modal/modal';
 
 interface Student {
   studentId: string;
@@ -20,11 +14,11 @@ interface Student {
 
 export default function Attendance() {
   const [students, setStudents] = useState<Student[]>([]);
-  const [selectedGrade, setSelectedGrade] = useState("");
+  const [selectedGrade, setSelectedGrade] = useState('');
   const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
-  const [selectedId, setSelectedId] = useState("");
-  const [attendanceStatus, setAttendanceStatus] = useState("");
-  const [error, setError] = useState("");
+  const [selectedId, setSelectedId] = useState('');
+  const [attendanceStatus, setAttendanceStatus] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -32,14 +26,14 @@ export default function Attendance() {
     const now = new Date();
     const offsetInMs = 7 * 60 * 60 * 1000; // 7 jam dalam milidetik
     const wibDate = new Date(now.getTime() + offsetInMs);
-    return wibDate.toISOString().split("T")[0]; // yyyy-mm-dd
+    return wibDate.toISOString().split('T')[0]; // yyyy-mm-dd
   };
 
   const formattedDate = getTodayInWIB();
 
   useEffect(() => {
     const fetchStudents = async () => {
-      const snapshot = await getDocs(collection(db, "students"));
+      const snapshot = await getDocs(collection(db, 'students'));
       const data = snapshot.docs.map((doc) => doc.data() as Student);
       setStudents(data);
     };
@@ -50,7 +44,7 @@ export default function Attendance() {
     if (selectedGrade) {
       const filtered = students.filter((s) => s.grade === selectedGrade);
       setFilteredStudents(filtered);
-      setSelectedId(""); // reset selected student
+      setSelectedId(''); // reset selected student
     } else {
       setFilteredStudents([]);
     }
@@ -58,26 +52,22 @@ export default function Attendance() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setError('');
     setLoading(true);
 
     const student = students.find((s) => s.studentId === selectedId);
     if (!student) {
-      setError("Siswa tidak ditemukan");
+      setError('Siswa tidak ditemukan');
       setLoading(false);
       return;
     }
 
-    // const phone = student.parentPhone.startsWith('0')
-    //   ? '62' + student.parentPhone.slice(1)
-    //   : student.parentPhone;
+    const phone = student.parentPhone.startsWith('0')
+      ? '62' + student.parentPhone.slice(1)
+      : student.parentPhone;
 
     try {
-      const attendanceRef = doc(
-        db,
-        "attendance",
-        `${selectedId}_${formattedDate}`
-      );
+      const attendanceRef = doc(db, 'attendance', `${selectedId}_${formattedDate}`);
 
       await setDoc(attendanceRef, {
         ...student,
@@ -86,13 +76,26 @@ export default function Attendance() {
         timestamp: Timestamp.now(),
       });
 
+      await fetch('/api/sendto-whatsapp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phone,
+          name: student.name,
+          grade: student.grade,
+          date: formattedDate,
+          status: attendanceStatus,
+        }),
+      });
+
       setShowModal(true);
-      setSelectedGrade("");
-      setSelectedId("");
-      setAttendanceStatus("");
+      setSelectedGrade('');
+      setSelectedId('');
+      setAttendanceStatus('');
     } catch (err: unknown) {
-      if (err instanceof Error)
-        setError(err.message ?? "Gagal menyimpan kehadiran");
+      if (err instanceof Error) setError(err.message ?? 'Gagal menyimpan kehadiran');
     } finally {
       setLoading(false);
     }
@@ -111,8 +114,7 @@ export default function Attendance() {
               required
               value={selectedGrade}
               onChange={(e) => setSelectedGrade(e.target.value)}
-              className="border px-2 w-full py-3 font-normal border-disable rounded-lg placeholder:text-disable placeholder:font-light text-sm"
-            >
+              className="border px-2 w-full py-3 font-normal border-disable rounded-lg placeholder:text-disable placeholder:font-light text-sm">
               <option value="" disabled>
                 Pilih Kelas
               </option>
@@ -132,10 +134,9 @@ export default function Attendance() {
               value={selectedId}
               onChange={(e) => setSelectedId(e.target.value)}
               disabled={!selectedGrade}
-              className="border px-2 w-full py-3 font-normal border-disable rounded-lg placeholder:text-disable placeholder:font-light text-sm"
-            >
+              className="border px-2 w-full py-3 font-normal border-disable rounded-lg placeholder:text-disable placeholder:font-light text-sm">
               <option value="" disabled>
-                {selectedGrade ? "Pilih Siswa" : "Pilih Kelas Terlebih Dahulu"}
+                {selectedGrade ? 'Pilih Siswa' : 'Pilih Kelas Terlebih Dahulu'}
               </option>
               {filteredStudents.map((s) => (
                 <option key={s.studentId} value={s.studentId}>
@@ -153,20 +154,15 @@ export default function Attendance() {
               value={attendanceStatus}
               onChange={(e) => setAttendanceStatus(e.target.value)}
               disabled={!selectedId}
-              className="border px-2 w-full py-3 font-normal border-disable rounded-lg placeholder:text-disable placeholder:font-light text-sm"
-            >
+              className="border px-2 w-full py-3 font-normal border-disable rounded-lg placeholder:text-disable placeholder:font-light text-sm">
               <option value="" disabled>
-                {selectedId
-                  ? "Pilih Status Kehadiran"
-                  : "Pilih Siswa Terlebih Dahulu"}
+                {selectedId ? 'Pilih Status Kehadiran' : 'Pilih Siswa Terlebih Dahulu'}
               </option>
-              {["Hadir", "Sakit", "Ijin Keperluan Pribadi", "Alpha"].map(
-                (n) => (
-                  <option key={n} value={n}>
-                    {n}
-                  </option>
-                )
-              )}
+              {['Hadir', 'Sakit', 'Ijin Keperluan Pribadi', 'Alpha'].map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -176,9 +172,8 @@ export default function Attendance() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-duniakoding-primary w-full text-white px-4 py-3 rounded-2xl"
-            >
-              {loading ? "Menyimpan..." : "Simpan Kehadiran"}
+              className="bg-duniakoding-primary w-full text-white px-4 py-3 rounded-2xl">
+              {loading ? 'Menyimpan...' : 'Simpan Kehadiran'}
             </button>
           </div>
         </form>

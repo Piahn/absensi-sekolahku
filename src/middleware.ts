@@ -6,14 +6,12 @@ export const publicPath = ["/login", "/register"];
 export function middleware(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
     const path = req.nextUrl.pathname;
-    const isProtected = protectedPath.some((protectedPath) => path.startsWith(protectedPath));
-    const isPublic = publicPath.some((publicPath) => path.startsWith(publicPath))
 
-    if(token && isPublic) {
+    if(path === "/" && token) {
         return NextResponse.redirect(new URL("/dashboard", req.url));
     }
 
-    if(!token && isProtected) {
+    if(path === "/" && !token) {
         return NextResponse.redirect(new URL("/login", req.url));
     }
 }
